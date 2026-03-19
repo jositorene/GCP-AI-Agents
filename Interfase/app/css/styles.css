@@ -1,0 +1,115 @@
+/* Reset */
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Full-page background */
+.stApp {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Logo */
+.login-container img {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 24px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Title styling */
+.title {
+  color: #ffffff;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+/* Info text under title */
+.info-text {
+  color: #f0f0f0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  text-align: left;    /* left aligned text */
+  list-style: none;    /* remove bullets */
+}
+
+/* Form labels */
+.stTextInput > label {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Form input fields */
+.stTextInput > div > input {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Buttons styling */
+.stButton > button {
+  background-color: #1f77b4;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;   /* add horizontal space */
+  width: 100%;
+  font-size: 1rem;
+  margin-top: 12px;
+  cursor: pointer;
+  height: auto;         /* let button grow if needed */
+  min-height: 48px;     /* keeps a clean button height */
+  white-space: normal;  /* allows text to wrap */
+  line-height: 1.3;
+  text-align: center;
+}
+
+.stButton > button:hover {
+  background-color: #155d8b;
+}
+
+/* Radio buttons */
+.stRadio > label {
+  color: #ffffff;
+}
+
+/* Inline columns for registration/back buttons */
+.stColumns {
+  margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 30px 20px;
+    margin: 40px auto;
+  }
+
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .login-container img {
+    max-width: 150px;
+  }
+
+  .stTextInput > div > input {
+    font-size: 1rem;
+  }
+}

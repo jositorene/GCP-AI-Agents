@@ -1,0 +1,19 @@
+I want to create a streamlit project step by step, first I want an initial page centered for login. Username and password, the project must be in a folder called app, because there will be other folders. The folder app will have to include subfolder css, js, images, text. This will be responsive so I need all the css, js etc files for this. This login page would have to have give the info that if it is a new user, must go to registration if it is already a registered user just login. There will be two type of users; subscriber and journalist, this can be done with radio buttons. Give me all the files for this
+
+
+
+
+
+
+
+
+
+
+
+I have a logo image with transparent background. Now I have choose a background that is an image "bcground.jpg" located in "/app/images/bcground.jpg" I want you that implement this in my code that image as the background of the page. Also in the main page there is a blank space or window or placeholder on top of the logo. I want to get rid off that. return me the fully updated needed files and delete the place holder where the logo is located. This place holder is white at the moment and my background very gray so it looks like blank space.
+
+
+the next step is two create to pages. We are now talking only when the "Go to Registration" link is pressed. Based on the selection of the previous page, the login page this link will open a registration.py page. The registration page must warn that this is a registration for journalist in case that option was choose or for a subscriber. In case the subscriber was selected, the new registration is for a user, this page will ask for a username, password and email. once the submit button is clicked a mock form for the payment will be produced. This will be just mock, meaning all the data for credit card, year of the validation etc will be presented and filled with example data. once the pay is done This will be redirected to the user page. This page will be created later. One for the subscriber and one for the journalist. give me the fully updated files, news one or the old ones updated
+
+
+apply my background to my first login page is not visible yet the background image is "app/images/bcground.jpg". I don't want to use the left panel for the first login page get rid off it. The logo is way to small and I don't want padding with the logo image. Beside this when pressing the Botton "Go to registration" is giving the error bellow. Before this button I want a text saying "New Use go to: " then this button. Correct all these and return me the fully updated file with no explanation:

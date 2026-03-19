@@ -1,0 +1,19 @@
+student-01-17c933fbaf42@qwiklabs.net
+kmM9hcUTX05m
+qwiklabs-gcp-04-fbe6590e5d61
+
+alias python=python3
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+alias python=python3
+python -m venv venv
+source venv/bin/activate
+
+gcloud auth login
+gcloud config set project qwiklabs-gcp-04-fbe6590e5d61
+
+streamlit run main.py
+
+bellow is my code, now give me the fully updated file for registration.py

@@ -1,0 +1,21 @@
+# Streamlit & frontend
+streamlit>=1.30.0
+
+# Data
+pandas>=2.0.0
+
+# LangChain
+langchain-community>=0.2.0
+langchain-google-genai>=1.0.0
+
+# Authentication & security
+bcrypt>=4.0.1
+
+# Firebase Admin SDK for Firebase Auth
+firebase-admin>=6.1.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Optional but recommended for Cloud Run HTTP requests
+requests>=2.31.0
