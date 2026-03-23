@@ -1,0 +1,84 @@
+/* 1. IMPORTACIÓN DE FUENTES PREMIUM */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600&family=Libre+Baskerville:italic@400&display=swap');
+
+/* 2. CONFIGURACIÓN DEL LIENZO (FONDO NEUTRO) */
+.stApp {
+    background-color: #fdfdfb; /* Blanco hueso para evitar fatiga visual */
+}
+
+/* 3. TÍTULOS ESTILO CABECERA DE PRENSA */
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif !important;
+    color: #1a1a1a !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em;
+}
+
+/* Título principal con línea doble típica de diario */
+h1 {
+    border-bottom: 3px double #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 25px !important;
+}
+
+/* 4. TEXTO DE LECTURA (NOTICIAS) */
+.stMarkdown p, .stText {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.1rem !important;
+    line-height: 1.65 !important;
+    color: #2c2c2c !important;
+    max-width: 850px; /* Ancho óptimo de lectura para profesionales */
+}
+
+/* 5. CITAS Y "HIGHLIGHTS" */
+blockquote {
+    font-family: 'Libre Baskerville', serif !important;
+    font-style: italic;
+    border-left: 4px solid #1a1a1a !important;
+    background-color: #f4f4f2 !important;
+    padding: 25px !important;
+    margin: 20px 0 !important;
+    color: #444 !important;
+}
+
+/* 6. BARRA LATERAL (SIDEBAR) */
+[data-testid="stSidebar"] {
+    background-color: #f8f9fa !important;
+    border-right: 1px solid #eeeeee;
+}
+
+/* OCULTAR MENÚ NATIVO DE CARPETAS (FUNDAMENTAL) */
+[data-testid="stSidebarNav"] {
+    display: none !important;
+}
+
+/* 7. BOTONES E INTERFAZ */
+.stButton>button {
+    border-radius: 0px !important; /* Bordes rectos para seriedad */
+    border: 1px solid #1a1a1a !important;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+}
+
+.stButton>button:hover {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+/* 8. MÉTRICAS (VERIFICADOR) */
+[data-testid="stMetricValue"] {
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 700 !important;
+}
+
+[data-testid="stMetricLabel"] {
+    font-family: 'Inter', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 0.75rem !important;
+    letter-spacing: 1px;
+}
