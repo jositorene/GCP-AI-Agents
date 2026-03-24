@@ -1,0 +1,734 @@
+Objective
+Design and build a prototype of Digital Newspapper based on AI Agents. The Agents should help to generate content, analyze trends, interact with reader/susbscribers and enhance the presence of the Flash Digital News Paper.
+
+I want to create a streamlit project step by step, first I want an initial page centered for login. Username and password, the project must be in a folder called app, because there will be other folders. The folder app will have to include subfolder css, js, images, text. This will be responsive so I need all the css, js etc files for this. This login page would have to have give the info that if it is a new user, must go to registration if it is already a registered user just login. There will be two type of users; subscriber and journalist, this can be done with radio buttons. Give me all the files for this
+
+I have a logo image with transparent background. Now I have choose a background that is an image "bcground.jpg" located in "/app/images/bcground.jpg" I want you that implement this in my code that image as the background of the page. Also in the main page there is a blank space or window or placeholder on top of the logo. I want to get rid off that. return me the fully updated needed files and delete the place holder where the logo is located. This place holder is white at the moment and my background very gray so it looks like blank space.
+
+the next step is two create to pages. We are now talking only when the "Go to Registration" link is pressed. Based on the selection of the previous page, the login page this link will open a registration.py page. The registration page must warn that this is a registration for journalist in case that option was choose or for a subscriber. In case the subscriber was selected, the new registration is for a user, this page will ask for a username, password and email. once the submit button is clicked a mock form for the payment will be produced. This will be just mock, meaning all the data for credit card, year of the validation etc will be presented and filled with example data. once the pay is done This will be redirected to the user page. This page will be created later. One for the subscriber and one for the journalist. give me the fully updated files, news one or the old ones updated
+
+apply my background to my first login page is not visible yet the background image is "app/images/bcground.jpg". I don't want to use the left panel for the first login page get rid off it. The logo is way to small and I don't want padding with the logo image. Beside this when pressing the Botton "Go to registration" is giving the error bellow. Before this button I want a text saying "New Use go to: " then this button. Correct all these and return me the fully updated file with no explanation:
+
+=======================
+I have a project "Flash Newspaper" implemented with Streamlit, the most important thing is that it runs on Cloud Run. The project has a Firebase database. The project has a website with hardcoded data just for the initial part, afterwards all will be read from the news_DB. The database is crucial and proper connection is the most important part. The following data is stored in the database: username, email address, password, user type (this could be journalist or subscriber), topics chosen from the user, result_news created by a called search agent, afterwards new field will be added. These topics could include: history, latest news from Spain, sports, current world news, science, technology, education, geography, etc. If the topic a user wants isn't listed, they can enter their desired topic in a text field. All this information must be stored in the database; the initial data can be hardcoded. The most important thing is that the database can upload and load the data without any problems. This will be created in GCP using Google Cloud Run. It's necessary to have the correct configuration with everything required: service account, placeholder for project_id, and any other needed variables, etc. and any other variable needed. 
+
+All data in 2 forms must stored in the database: username, email address, password, user type (this could be journalist or subscriber), topics chosen from the user, result_news created by a called search agent, afterwards new field will be added. Some topics included: history, latest news from Spain, sports, current world news, science, technology, education, geography, etc. A missing topic, user will give in a input field. No missing info from 2 forms. give me 1 registration.py
+
+====================
+
+After all this works fine and the user is login successfully, he will be redirected to his Subscriber/Journalist Page.. The current topis that he choose at the registration page will be retrieved from the "news_db" and it will be shown as information. Also here there will be a input field for "Choose the latest news of:". This information will be submitted and saved to the "news_db" created at the beggining. At arrival in this subscriber/Journalist page, there must be a welcoming message with his user name properly and nicely formated. In the subscriber/Journalist page on top of all the info described above, in One line there will be 5 buttons that will call 5 different AI agents: New Research Agent, Article Generation Agent, Fact Checking Agent, Reading Interaction Agent and Social Media Agent. For each will be a button that will trigger an AI Agent. A icon describing each Agent will be there as well as the name of the Agent and the button. Create for me now the registration.py. At the moment this page shows nothing, at least the topics selected for the user at the registration should be there in the "news_db" and pasted in this page. Correct all the errors and give the fully updated file subscriber_page.py. Currently the code is as follows: 
+
+import streamlit as st
+
+from app.app import get_user, go_to, logout, update_user_news
+
+
+def render_subscriber_page():
+    user = st.session_state.get("logged_user")
+    if not user:
+        go_to("login")
+        return
+
+    current_user = get_user(user["username"]) or user
+    st.markdown(
+        f"<h1 style='text-align: center;'>Welcome, {current_user['username']}</h1>",
+        unsafe_allow_html=True,
+    )
+    st.write("")
+    topic = st.text_input("Search the latest news of:")
+
+    if st.button("Search"):
+        if topic.strip():
+            update_user_news(current_user["username"], topic.strip())
+            st.success(f"Simulated news for '{topic}' saved in news_DB.")
+            st.rerun()
+        else:
+            st.warning("Write a topic first.")
+
+    st.subheader("Latest news results stored in news_DB")
+    for item in current_user.get("news_results", []):
+        with st.container(border=True):
+            st.markdown(f"**Topic:** {item.get('topic', '-')}")
+            st.markdown(f"**Headline:** {item.get('headline', '-')}")
+            st.write(item.get("summary", "-"))
+            st.caption(f"Source: {item.get('source', '-')} | Published: {item.get('published_at', '-')}")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Refresh from DB"):
+            st.rerun()
+    with col2:
+        if st.button("Logout"):
+            logout()
+
+I have my Search Agent code already created and is working fine on his own, I need to integrated here, this agent is composed from: search_agent.py, app/news_agent.py, app/news_tool.py, app/utils.py. This search agent base of the choosen topic of the user or the custom "latest news of:" search the news using an API and connecting to the news.org. It retrieves the news saved to the news_db as "result_news" and presented to the subscriber user once he has logged in. So the logic is that when a user register himself and once the registration is succeffully and also the payment this will trigger the Agent New search retrived this information for this specific user and pasted once he has logged in also succefuly. At the same time once the user is in his subscriber page and he uses the "The latest news for:" this will trigger the Search Agent retrieve the information saved in the news_DB and paste it in the realtime for the user. Of course news, topic etc from different users will be differents.
+
+on one side there is already an app/app.py without the agent, this is: 
+import os
+import hashlib
+from datetime import datetime, timezone
+from typing import Dict, List
+
+import streamlit as st
+from google.cloud import firestore
+from google.api_core.exceptions import AlreadyExists
+
+DEFAULT_TOPICS = [
+    "Science",
+    "Education",
+    "Technology",
+    "Politics",
+    "Health",
+    "Sports",
+    "Religion",
+    "Economics",
+    "Environment",
+    "Astronomy",
+]
+
+
+def get_env(name: str, default: str = "") -> str:
+    return os.getenv(name, default)
+
+
+@st.cache_resource
+def get_db():
+    project_id = get_env("PROJECT_ID", "")
+    if project_id:
+        return firestore.Client(project=project_id)
+    return firestore.Client()
+
+
+def users_collection():
+    db = get_db()
+    collection_name = get_env("FIRESTORE_COLLECTION_USERS", "users")
+    return db.collection(collection_name)
+
+
+def audit_collection():
+    db = get_db()
+    collection_name = get_env("FIRESTORE_COLLECTION_AUDIT", "login_audit")
+    return db.collection(collection_name)
+
+
+def hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode("utf-8")).hexdigest()
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def generate_news_results(topics: List[str]) -> List[Dict]:
+    topics = [topic.strip() for topic in topics if topic and topic.strip()]
+    if not topics:
+        topics = ["General News"]
+
+    rows = []
+    for idx, topic in enumerate(topics, start=1):
+        rows.append(
+            {
+                "topic": topic,
+                "headline": f"{topic}: simulated breaking update #{idx}",
+                "summary": f"This is simulated data stored in Firestore for the topic '{topic}'.",
+                "published_at": now_iso(),
+                "source": "news_paper simulation",
+            }
+        )
+    return rows
+
+
+def user_exists(username: str) -> bool:
+    doc = users_collection().document(username.lower()).get()
+    return doc.exists
+
+
+def get_user(username: str):
+    doc = users_collection().document(username.lower()).get()
+    return doc.to_dict() if doc.exists else None
+
+
+def create_user(payload: Dict):
+    username_key = payload["username"].lower()
+    users_collection().document(username_key).set(payload)
+
+
+def update_user_news(username: str, topic: str):
+    username_key = username.lower()
+    custom_news = generate_news_results([topic])
+    users_collection().document(username_key).update(
+        {
+            "last_search_topic": topic,
+            "news_results": custom_news,
+            "updated_at": now_iso(),
+        }
+    )
+
+
+def register_login_attempt(username: str, success: bool):
+    audit_collection().add(
+        {
+            "username": username,
+            "success": success,
+            "timestamp": now_iso(),
+        }
+    )
+
+
+def authenticate_user(username: str, password: str):
+    user = get_user(username)
+    if not user:
+        register_login_attempt(username, False)
+        return None
+
+    if user.get("password_hash") != hash_password(password):
+        register_login_attempt(username, False)
+        return None
+
+    register_login_attempt(username, True)
+    return user
+
+
+def init_state():
+    defaults = {
+        "page": "login",
+        "pending_registration": {},
+        "logged_user": None,
+    }
+    for key, value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
+
+
+def go_to(page_name: str):
+    st.session_state["page"] = page_name
+    st.rerun()
+
+
+def logout():
+    st.session_state["logged_user"] = None
+    st.session_state["page"] = "login"
+    st.rerun()
+
+
+def save_registration(form_data: Dict):
+    topics = list(form_data.get("topics", []))
+    custom_topic = form_data.get("custom_topic", "").strip()
+    if custom_topic:
+        topics.append(custom_topic)
+
+    payload = {
+        "username": form_data["username"],
+        "email": form_data["email"],
+        "password_hash": hash_password(form_data["password"]),
+        "user_type": form_data["user_type"],
+        "selected_topics": topics,
+        "custom_topic": custom_topic,
+        "news_results": generate_news_results(topics),
+        "created_at": now_iso(),
+        "updated_at": now_iso(),
+        "last_search_topic": topics[0] if topics else "",
+    }
+    st.session_state["pending_registration"] = payload
+
+on the other side the agent itself has his own app/app.py, which is:
+# app/app.py
+
+import streamlit as st
+from datetime import datetime
+from google.cloud import firestore
+from news_agent import create_news_research_agent
+import os
+from dotenv import load_dotenv
+
+# ---------------------------------------------------------
+# Load .env for local development (optional)
+# ---------------------------------------------------------
+load_dotenv()
+
+# ---------------------------------------------------------
+# Firestore setup
+# ---------------------------------------------------------
+# On Cloud Run, make sure GOOGLE_APPLICATION_CREDENTIALS is set if needed
+db = firestore.Client()
+collection_name = "news_results"
+
+# ---------------------------------------------------------
+# Initialize the agent once (cached to prevent re-creation)
+# ---------------------------------------------------------
+@st.cache_resource
+def get_agent():
+    return create_news_research_agent()
+
+agent = get_agent()
+
+# ---------------------------------------------------------
+# Streamlit UI
+# ---------------------------------------------------------
+st.set_page_config(page_title="News Research Agent", layout="wide")
+st.title("News Research Agent")
+st.write("Ask a question and get the latest news!")
+
+# Initialize session state for conversation history
+if "history" not in st.session_state:
+    st.session_state.history = []
+
+# User input
+query = st.text_input("Enter your question:")
+
+# ---------------------------------------------------------
+# Handle user query
+# ---------------------------------------------------------
+if st.button("Ask") and query:
+    with st.spinner("Researching..."):
+        try:
+            # Invoke the agent
+            result = agent.invoke({"input": query})
+
+            # Extract the final answer
+            answer = result.get("output", "No output returned.")
+
+            # Save to session state
+            st.session_state.history.append((query, answer))
+
+            # Display answer
+            st.subheader("Answer:")
+            st.write(answer)
+
+            # Prepare Firestore data
+            firestore_data = {
+                "timestamp": datetime.utcnow(),
+                "query": query,
+                "output": answer,
+                "intermediate_steps": result.get("intermediate_steps", [])
+            }
+
+            # Save to Firestore
+            doc_ref = db.collection(collection_name).document()
+            doc_ref.set(firestore_data)
+
+            st.success(f"Result saved to Firestore collection '{collection_name}'")
+
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
+
+# ---------------------------------------------------------
+# Display conversation history
+# ---------------------------------------------------------
+if st.session_state.history:
+    st.subheader("Conversation History:")
+    for q, a in st.session_state.history:
+        st.markdown(f"**You:** {q}")
+        st.markdown(f"**Agent:** {a}")
+
+unified both in case it is possible to use just one.
+
+now we go step by step, first the .env file. I have rewrite it the actual is:
+
+# =========================
+# Application Info
+# =========================
+APP_TITLE="Digital Newspaper AI Platform"
+ENVIRONMENT=dev
+APPLICATION=digital-newspaper-ai
+OWNER=renef
+
+PROJECT_ID=qwiklabs-gcp-01-95c6cae418a3
+SERVICE_NAME=news-paper-service
+REGION=us-central1
+
+# =========================
+# Docker / Artifact Registry
+# =========================
+ARTIFACT_REPOSITORY=news-paper-repo
+IMAGE_NAME=news-paper-image
+IMAGE_TAG=latest
+
+# =========================
+# Cloud Run Config
+# =========================
+CLOUD_RUN_SERVICE_NAME=digital-newspaper-service
+CLOUD_RUN_CPU=1
+CLOUD_RUN_MEMORY=512Mi
+CLOUD_RUN_MAX_INSTANCES=2
+CLOUD_RUN_MIN_INSTANCES=0
+CLOUD_RUN_CONCURRENCY=80
+CLOUD_RUN_TIMEOUT=300
+CLOUD_RUN_ALLOW_UNAUTHENTICATED=true
+CLOUD_RUN_PORT=8080
+
+FIRESTORE_DATABASE="(default)"
+FIRESTORE_COLLECTION_USERS=users
+FIRESTORE_COLLECTION_AUDIT=login_audit
+
+GOOGLE_CLOUD_QUOTA_PROJECT=qwiklabs-gcp-01-95c6cae418a3
+STREAMLIT_SERVER_HEADLESS=true
+STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+
+
+# ===============================
+# API Keys for Search Agent
+# ===============================
+
+# OpenAI API Key (for any OpenAI-related calls)
+OPENAI_API_KEY=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
+
+# News API Key (for news search tool)
+NEWS_API_KEY=475253ab14e14d93b8de87688c140a80
+
+# Google Cloud Project ID
+PROJECT_ID=qwiklabs-gcp-01-95c6cae418a3
+
+# Google API Key (for LangChain / Google Generative AI)
+GOOGLE_API_KEY=AIzaSyB3H1_2EeuocYyryHrs-PLSpLVp621NtJ8
+
+# Google API version (optional, if used in your code)
+GOOGLE_API_VERSION=v1
+
+# Tavily API Key (if using Tavily news search)
+TAVILY_API_KEY=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
+
+step by step before the app/news_agent.py my currently deploy.py is as follows, give me the fully updated file:
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+# ----------------------------
+# Setup & Environment
+# ----------------------------
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_FILE="${ROOT_DIR}/.env"
+
+if [[ ! -f "${ENV_FILE}" ]]; then
+  echo "ERROR: .env file not found in ${ROOT_DIR}"
+  exit 1
+fi
+
+set -a
+source "${ENV_FILE}"
+set +a
+
+# List of required variables from .env
+required_vars=(
+  PROJECT_ID
+  SERVICE_NAME
+  REGION
+  ARTIFACT_REPOSITORY
+  IMAGE_NAME
+  IMAGE_TAG
+  CLOUD_RUN_CPU
+  CLOUD_RUN_MEMORY
+  CLOUD_RUN_MAX_INSTANCES
+  CLOUD_RUN_MIN_INSTANCES
+  CLOUD_RUN_CONCURRENCY
+  CLOUD_RUN_TIMEOUT
+  CLOUD_RUN_PORT
+)
+
+# Validate that all required variables are set
+for var in "${required_vars[@]}"; do
+  if [[ -z "${!var:-}" ]]; then
+    echo "ERROR: Variable ${var} is missing in .env"
+    exit 1
+  fi
+done
+
+IMAGE_URI="${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
+
+echo "==> Setting gcloud project to: ${PROJECT_ID}"
+gcloud config set project "${PROJECT_ID}"
+
+echo "==> Enabling required APIs (this may take a minute)"
+gcloud services enable \
+  run.googleapis.com \
+  secretmanager.googleapis.com \
+  cloudbuild.googleapis.com \
+  artifactregistry.googleapis.com \
+  firestore.googleapis.com \
+  firebase.googleapis.com \
+  iam.googleapis.com \
+  --project="$PROJECT_ID"
+
+# ----------------------------
+# Resource Provisioning
+# ----------------------------
+
+echo "==> Creating Artifact Registry repository if needed"
+gcloud artifacts repositories create "${ARTIFACT_REPOSITORY}" \
+    --repository-format=docker \
+    --location="${REGION}" \
+    --description="Artifact Registry for news_paper" 2>/dev/null || echo "Repository already exists."
+
+echo "==> Ensuring Firestore database exists (Native Mode)"
+# Firestore often requires 'nam5' (multi-region) or the specific region. 
+# We use 'nam5' for best compatibility in Qwiklabs.
+gcloud firestore databases create \
+    --database="(default)" \
+    --location="nam5" \
+    --type=firestore-native 2>/dev/null || echo "Firestore database already exists or is being provisioned."
+
+echo "==> Granting Firestore permissions to Cloud Run Service Account"
+PROJECT_NUMBER=$(gcloud projects describe "${PROJECT_ID}" --format='value(projectNumber)')
+SERVICE_ACCOUNT="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
+
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member="serviceAccount:${SERVICE_ACCOUNT}" \
+    --role="roles/datastore.user" --quiet >/dev/null
+
+# ----------------------------
+# Build & Deploy
+# ----------------------------
+
+echo "==> Building container image with Cloud Build"
+gcloud builds submit "${ROOT_DIR}" --tag "${IMAGE_URI}"
+
+echo "==> Deploying to Cloud Run: ${SERVICE_NAME}"
+DEPLOY_ARGS=(
+  "${SERVICE_NAME}"
+  "--image=${IMAGE_URI}"
+  "--region=${REGION}"
+  "--platform=managed"
+  "--port=${CLOUD_RUN_PORT}"
+  "--memory=${CLOUD_RUN_MEMORY}"
+  "--cpu=${CLOUD_RUN_CPU}"
+  "--max-instances=${CLOUD_RUN_MAX_INSTANCES}"
+  "--min-instances=${CLOUD_RUN_MIN_INSTANCES}"
+  "--concurrency=${CLOUD_RUN_CONCURRENCY}"
+  "--timeout=${CLOUD_RUN_TIMEOUT}"
+  "--set-env-vars=APP_TITLE=${APP_TITLE},ENVIRONMENT=${ENVIRONMENT},APPLICATION=${APPLICATION},OWNER=${OWNER},PROJECT_ID=${PROJECT_ID},FIRESTORE_DATABASE=${FIRESTORE_DATABASE},FIRESTORE_COLLECTION_USERS=${FIRESTORE_COLLECTION_USERS},FIRESTORE_COLLECTION_AUDIT=${FIRESTORE_COLLECTION_AUDIT},STREAMLIT_SERVER_HEADLESS=${STREAMLIT_SERVER_HEADLESS},STREAMLIT_BROWSER_GATHER_USAGE_STATS=${STREAMLIT_BROWSER_GATHER_USAGE_STATS}"
+)
+
+if [[ "${CLOUD_RUN_ALLOW_UNAUTHENTICATED}" == "true" ]]; then
+  DEPLOY_ARGS+=("--allow-unauthenticated")
+else
+  DEPLOY_ARGS+=("--no-allow-unauthenticated")
+fi
+
+gcloud run deploy "${DEPLOY_ARGS[@]}"
+
+echo "==> Deployment completed successfully!"
+echo "URL de acceso:"
+gcloud run services describe "${SERVICE_NAME}" --region="${REGION}" --format='value(status.url)'
+
+
+step by step before I upload all the needed file I will give it to you so you can correct them, first I need to know where I should put it, at the root directory?. the selt search_agent.py is as follows: 
+import streamlit as st
+import os
+import json
+from datetime import datetime
+from dotenv import load_dotenv
+
+# Safe Import for Firestore to prevent app crashes
+try:
+    from google.cloud import firestore
+except ImportError:
+    firestore = None
+
+# Import your agent logic
+from news_agent import create_news_research_agent
+
+# 1. Setup Environment
+load_dotenv()
+os.makedirs("agent_results", exist_ok=True)
+
+# 2. Page Configuration
+st.set_page_config(
+    page_title="Global News Research Agent",
+    page_icon="🌎",
+    layout="centered"
+)
+
+# 3. Initialize Agent (Cached to prevent reloading on every click)
+@st.cache_resource
+def load_agent():
+    try:
+        return create_news_research_agent()
+    except Exception as e:
+        st.error(f"Failed to initialize Agent: {e}")
+        return None
+
+agent = load_agent()
+
+# 4. Sidebar / Header
+st.title("🤖 News Research Agent")
+st.markdown("""
+This agent uses **Google Gemini** and **LangChain** to research the latest world news. 
+Enter a topic below to start the research.
+""")
+
+# 5. User Interaction
+query = st.text_input("Enter your research topic:", placeholder="e.g., SpaceX latest launches or AI trends 2025")
+
+if st.button("Start Research"):
+    if not query:
+        st.warning("Please enter a question or topic first.")
+    elif agent is None:
+        st.error("Agent is not initialized. Check your API Key and internet connection.")
+    else:
+        with st.spinner(f"Agent is researching '{query}'..."):
+            try:
+                # Invoke the LangChain Agent
+                # Result format: {'input': ..., 'output': ..., 'intermediate_steps': ...}
+                result = agent.invoke({"input": query})
+                
+                # Display the Final Answer
+                st.subheader("Final Report")
+                st.success(result.get("output", "No response generated."))
+
+                # Save the results to a JSON file
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                filename = f"agent_results/research_{timestamp}.json"
+                
+                output_data = {
+                    "query": query,
+                    "timestamp": datetime.now().isoformat(),
+                    "final_answer": result.get("output"),
+                    "steps": str(result.get("intermediate_steps", []))
+                }
+
+                with open(filename, "w", encoding="utf-8") as f:
+                    json.dump(output_data, f, indent=4, ensure_ascii=False)
+
+                st.caption(f"✅ Research logged to: `{filename}`")
+
+            except Exception as e:
+                st.error(f"An error occurred during research: {e}")
+
+# 6. Status Checks (Optional Footer)
+with st.expander("System Diagnostics"):
+    st.write(f"Firestore Available: {'✅ Yes' if firestore else '❌ No (Using local JSON storage instead)'}")
+    st.write(f"Google API Key Loaded: {'✅ Yes' if os.getenv('GOOGLE_API_KEY') else '❌ No'}")
+
+and the app/news_agent.py is as follows, this is the logic that is functioning itself I probed and it working. This file has nothing to do with the above.
+
+# app/news_agent.py
+import os
+from dotenv import load_dotenv
+
+# LangChain imports
+from langchain.agents import AgentExecutor, create_react_agent
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.prompts import PromptTemplate
+
+# Import the news search tool from the same package
+from app.news_tool import news_search_tool
+
+# Load .env if exists (for local development)
+load_dotenv()
+
+
+def create_news_research_agent():
+    """
+    Creates and returns a News Research AI agent using LangChain + Google Gemini.
+    The agent can perform web news searches using the news_search_tool.
+    """
+    # Initialize the LLM with Gemini model
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-2.5-flash-lite",
+        temperature=0.3,
+        google_api_key=os.getenv("GOOGLE_API_KEY")
+    )
+
+    # List of tools available to the agent
+    tools = [news_search_tool]
+
+    # ReAct prompt template
+    template = """Answer the following questions as best you can. You have access to the following tools:
+
+{tools}
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin!
+
+Question: {input}
+Thought: {agent_scratchpad}"""
+
+    # Create the prompt
+    prompt = PromptTemplate.from_template(template)
+
+    # Create the ReAct agent
+    agent = create_react_agent(llm, tools, prompt)
+
+    # Wrap in AgentExecutor for better error handling and verbosity
+    agent_executor = AgentExecutor(
+        agent=agent,
+        tools=tools,
+        verbose=True,
+        handle_parsing_errors=True
+    )
+    return agent_executor
+
+there are two more files: news_tool.py and utils.py I paste them step by step
+
+here is the news_tool.py
+
+import os
+from dotenv import load_dotenv
+
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain.tools import Tool
+
+load_dotenv()
+
+# Tavily tool
+search = TavilySearchResults(
+    max_results=5,
+    tavily_api_key=os.getenv("TAVILY_API_KEY")
+)
+
+news_search_tool = Tool(
+    name="news_search",
+    description="Search for the latest news and current events on the internet.",
+    func=search.run,
+)
+
+and the utils.py
+
+import os
+from dotenv import load_dotenv
+
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain.tools import Tool
+
+load_dotenv()
+
+# Tavily tool
+search = TavilySearchResults(
+    max_results=5,
+    tavily_api_key=os.getenv("TAVILY_API_KEY")
+)
+
+news_search_tool = Tool(
+    name="news_search",
+    description="Search for the latest news and current events on the internet.",
+    func=search.run,
+)
+
+after you tell me they are ok I will upload them and run deploy.sh
+
+Take a look of my app/ if it is correct, return me always the fully updated file:
+
+
+
+gcloud firestore databases list
+firebase firestore:indexes
+
+Obtener datos en formato JSON
+firebase database:get / --project [TU_PROJECT_ID]
+firebase database:get / --project [TU_PROJECT_ID]
+Listar instancias de base de datos:
+firebase database:instances:list
+
+
+The button in the subscriber page are not even the "Article Generation" appears as "Article Gen" and it looks ugly it should appear as the other in two lines "Article Generation"  
+On the registration page get rid off the left panel, there is button "Back to Login" that is all we need.

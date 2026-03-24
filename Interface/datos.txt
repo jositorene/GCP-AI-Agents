@@ -1,0 +1,21 @@
+student-02-2fa2f112d5e5@qwiklabs.net
+1ggBvJEO5gst
+qwiklabs-gcp-01-95c6cae418a3
+
+alias python=python3
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+
+Username: student-02-48f0b936d57d@qwiklabs.net
+Password: YdCjaDVRrkJp
+Project ID: qwiklabs-gcp-00-bd06d6933bdb
+
+gcloud --version
+gcloud auth login
+gcloud config set project qwiklabs-gcp-00-bd06d6933bdb
+
+chmod +x deploy.sh
+
+bellow is my code, now give me the fully updated file for registration.py
